@@ -1,9 +1,9 @@
 package ponomarev.andrei;
 
 
-import com.codeborne.selenide.Browser;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
@@ -19,6 +19,13 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.By.linkText;
 
 public class SelenideTest {
+private final String TextInput = "Selenide";
+    private final SelenideElement
+    SearchLine = $(".header-search-input"),
+    SelenideAppium = $(linkText("selenide/selenide-appium")),
+    IssuesTab = $("#issues-tab"),
+    CheckText = $(withText("#75"));
+
 
     @BeforeAll
     static void settings() {
@@ -36,11 +43,15 @@ public class SelenideTest {
     public void issueSearchTest(){
         SelenideLogger.addListener("allure", new AllureSelenide());
 
+
         open("https://github.com/");
-        $(".header-search-input").click();
-        $(".header-search-input").setValue("Selenide").pressEnter();
-        $(linkText("selenide/selenide-appium")).click();
-        $("#issues-tab").click();
-        $(withText("#75")).should(Condition.exist);
+        SearchLine.click();
+        SearchLine.setValue(TextInput).pressEnter();
+        SelenideAppium.click();
+        IssuesTab.click();
+        CheckText.should(Condition.exist);
+    }
+
+    private class SelenedeElements {
     }
 }
