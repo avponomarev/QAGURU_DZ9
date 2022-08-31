@@ -2,11 +2,11 @@ package ponomarev.andrei;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -21,8 +21,13 @@ public class LambdaTest {
 
     }
 
-    private static final String REPO = "selenide/selenide-appium";
-    private static final int ISSUE = 75;
+    private final int issue = 75;
+    private final String repo = "selenide/selenide-appium";
+    private final SelenideElement
+            searchLine = $(".header-search-input"),
+            selenideAppium = $(linkText("selenide/selenide-appium")),
+            issuesTab = $("#issues-tab"),
+            checkTextissue = $(withText("#" + issue));
 
     @Test
     public void issueSearchLambdaTest() {
@@ -32,22 +37,22 @@ public class LambdaTest {
             open("https://github.com/");
         });
 
-        step("Ищем репозиторий" + REPO, () -> {
-            $(".header-search-input").click();
-            $(".header-search-input").setValue(REPO).pressEnter();
+        step("Ищем репозиторий" + repo, () -> {
+            searchLine.click();
+            searchLine.setValue(repo).pressEnter();
         });
 
 
-        step("Переходим в репозиторий" + REPO, () -> {
-            $(linkText("selenide/selenide-appium")).click();
+        step("Переходим в репозиторий" + repo, () -> {
+            selenideAppium.click();
         });
 
         step("Переходим во вкладку Issue", () -> {
-            $("#issues-tab").click();
+            issuesTab.click();
         });
 
-        step("Проверяем элемент Issue с номером" + ISSUE, () -> {
-            $(withText("#" + ISSUE)).should(Condition.exist);
+        step("Проверяем элемент Issue с номером" + issue, () -> {
+            checkTextissue.should(Condition.exist);
         });
     }
 
@@ -57,9 +62,9 @@ public class LambdaTest {
 
         AnnotatedTest steps = new AnnotatedTest();
         steps.openMainPage();
-        steps.findRepo(REPO);
-        steps.goToRepo(REPO);
+        steps.findRepo(repo);
+        steps.goToRepo(repo);
         steps.goToIssue();
-        steps.chekingIssue(ISSUE);
+        steps.chekingIssue(issue);
     }
 }

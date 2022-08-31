@@ -1,6 +1,5 @@
 package ponomarev.andrei;
 
-
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
@@ -12,7 +11,6 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -21,10 +19,10 @@ import static org.openqa.selenium.By.linkText;
 public class SelenideTest {
 private final String TextInput = "Selenide";
     private final SelenideElement
-    SearchLine = $(".header-search-input"),
-    SelenideAppium = $(linkText("selenide/selenide-appium")),
-    IssuesTab = $("#issues-tab"),
-    CheckText = $(withText("#75"));
+    searchLine = $(".header-search-input"),
+    selenideAppium = $(linkText("selenide/selenide-appium")),
+    issuesTab = $("#issues-tab"),
+    checkText = $(withText("#75"));
 
 
     @BeforeAll
@@ -45,13 +43,11 @@ private final String TextInput = "Selenide";
 
 
         open("https://github.com/");
-        SearchLine.click();
-        SearchLine.setValue(TextInput).pressEnter();
-        SelenideAppium.click();
-        IssuesTab.click();
-        CheckText.should(Condition.exist);
+        searchLine.click();
+        searchLine.setValue(TextInput).pressEnter();
+        selenideAppium.click();
+        issuesTab.click();
+        checkText.should(Condition.exist);
     }
 
-    private class SelenedeElements {
-    }
 }
